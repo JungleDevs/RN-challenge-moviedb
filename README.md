@@ -2,7 +2,7 @@
 
 <strong>Made by João Miguel.</strong>
 
-##Installation:
+## Installation:
 
 ### In the project directory to install dependencies, you can run:
 
