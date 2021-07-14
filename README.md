@@ -1,5 +1,17 @@
 # Jungle Devs - React Native Challenge The Movie DB
 
+<strong>Made by João Miguel.</strong>
+
+## Installation:
+
+### In the project directory to install dependencies, you can run:
+
+`npm install`
+
+### then
+
+`npm start`
+
 ## Description
 
 **Challenge goal**: The purpose of this challenge is to give a general idea of how to create a simple app using a variety of well accepted practices and technologies in the market. You'll be implementing a simplified version of a movie preview app using The Movie DB API. The concepts that you're gonna apply are:
