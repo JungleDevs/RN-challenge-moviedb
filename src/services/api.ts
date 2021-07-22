@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
-  timeout: 90_000,
+  timeout: 90000,
   headers: {
     'Content-Type': 'application/json',
   },

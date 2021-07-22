@@ -16,15 +16,15 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
 export const Banner = styled.Image`
   height: 100%;
   width: 118px;
-  border-bottom-left-radius: 8px;
-  border-top-left-radius: 8px;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
 `;
 
 export const Info = styled.View`
   height: 100%;
-  width: 100%;
   flex-shrink: 1;
   padding: 16px;
+  justify-content: space-between;
 `;
 
 export const Title = styled.Text`
@@ -53,4 +53,20 @@ export const TrendingText = styled.Text`
   font-size: 14px;
   color: #fff;
   margin-left: 6px;
+`;
+
+export const StarsContainer = styled.View<ContainerProps>`
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 8px;
+  background-color: ${props => (props.isFirst ? '#1F8CFF' : '#252634')};
+  border-radius: 4px;
+  margin-top: 8px;
+  width: 160px;
+`;
+
+export const StarsNUmber = styled.Text`
+  font-family: 'Inter-Regular';
+  font-size: 12px;
+  color: #fff;
 `;

@@ -1,6 +1,15 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useState, useEffect, useCallback } from 'react';
-import { SafeAreaView, TouchableOpacity, FlatList, View } from 'react-native';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  FlatList,
+  View,
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 import search from '../../assets/icons/search.png';
 import MovieCard from '../../components/MovieCard';
@@ -10,21 +19,55 @@ import * as S from './styles';
 const Trending: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [isSearching, setIsSearching] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
-  const fetchMovies = async () => {
-    const { data } = await getTrendingMovies();
-    setMovies(data.results);
-  };
-
-  const fetchGenres = async () => {
-    const { data: result } = await getGenres();
-    setGenres(result.genres);
-  };
+  const fetchData = useCallback(async () => {
+    setRefresh(true);
+    try {
+      const { data } = await getTrendingMovies();
+      const { data: result } = await getGenres();
+      setMovies(data.results);
+      setGenres(result.genres);
+      setLoading(false);
+      setRefresh(false);
+    } catch (e) {
+      Alert.alert('Atenção', e.message);
+      setLoading(false);
+      setRefresh(false);
+    }
+  }, []);
 
   useEffect(() => {
-    fetchMovies();
-    fetchGenres();
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  const headerComponent = useMemo(
+    () =>
+      isSearching ? (
+        <S.SearchContainer>
+          <S.TextInput value={searchText} onChangeText={setSearchText} />
+          <TouchableOpacity
+            onPress={() => {
+              setIsSearching(false);
+              setSearchText('');
+            }}
+          >
+            <Icon name="x-circle" size={30} color="#CDCED1" />
+          </TouchableOpacity>
+        </S.SearchContainer>
+      ) : (
+        <S.Header>
+          <S.Title>Top Movies</S.Title>
+          <TouchableOpacity onPress={() => setIsSearching(true)}>
+            <S.Search source={search} />
+          </TouchableOpacity>
+        </S.Header>
+      ),
+    [isSearching, searchText],
+  );
 
   const renderItem = useCallback(
     ({ item, index }: { item: Movie; index: number }) => {
@@ -43,6 +86,7 @@ const Trending: React.FC = () => {
             title={item.title}
             year={item.release_date.split('-')[0]}
             genres={names}
+            rating={item.vote_average / 2}
           />
         </View>
       );
@@ -50,20 +94,43 @@ const Trending: React.FC = () => {
     [movies.length, genres],
   );
 
+  const emptyComponent = () => (
+    <S.LoadingContainer>
+      <S.Button
+        onPress={() => {
+          setLoading(true);
+          fetchData();
+        }}
+      >
+        <S.ButtonText>Try Again</S.ButtonText>
+      </S.Button>
+    </S.LoadingContainer>
+  );
+
   return (
     <S.Container>
       <SafeAreaView />
-      <S.Header>
-        <S.Title>Top Movies</S.Title>
-        <TouchableOpacity>
-          <S.Search source={search} />
-        </TouchableOpacity>
-      </S.Header>
-      <FlatList
-        data={movies}
-        renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
-      />
+      {loading ? (
+        <S.LoadingContainer>
+          <ActivityIndicator />
+        </S.LoadingContainer>
+      ) : (
+        <FlatList
+          data={movies}
+          renderItem={renderItem}
+          ListHeaderComponent={headerComponent}
+          ListEmptyComponent={emptyComponent}
+          keyExtractor={item => item.id.toString()}
+          refreshControl={
+            <RefreshControl
+              tintColor="#CDCED1"
+              colors={['#CDCED1']}
+              refreshing={refresh}
+              onRefresh={fetchData}
+            />
+          }
+        />
+      )}
     </S.Container>
   );
 };
