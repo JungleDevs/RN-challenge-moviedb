@@ -5,7 +5,7 @@ import logo from '../../images/tv.png';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'royalblue',
+    backgroundColor: '#007CFF',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

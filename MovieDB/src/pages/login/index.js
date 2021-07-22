@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   TextInput,
@@ -12,7 +12,7 @@ import logo from '../../images/tv.png';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'royalblue',
+    backgroundColor: '#007CFF',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
 });
 
 const Login = ({navigation}) => {
-  const [login, onChangeText] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
+  const [login, onChangeText] = useState('');
+  const [password, onChangePassword] = useState('');
 
   const handleClick = () => {
     navigation.replace('Home');
