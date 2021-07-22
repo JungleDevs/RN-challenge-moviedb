@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   SafeAreaView,
@@ -8,15 +9,19 @@ import {
 } from 'react-native';
 
 import search from '../../assets/icons/search.png';
-import { getTrendingMovies, Movie } from '../../services/api';
+import MovieCard from '../../components/MovieCard';
+import { getTrendingMovies, Movie, getGenres, Genre } from '../../services/api';
 import * as S from './styles';
 
 const Trending: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
 
   const fetchMovies = async () => {
     const { data } = await getTrendingMovies();
     setMovies(data.results);
+    const { data: result } = await getGenres();
+    setGenres(result.genres);
   };
 
   useEffect(() => {
@@ -26,8 +31,13 @@ const Trending: React.FC = () => {
   const renderItem = useCallback(
     ({ item, index }: { item: Movie; index: number }) => {
       return (
-        <View>
-          <Text style={{ color: '#fff' }}>{item.title}</Text>
+        <View style={{ marginBottom: index + 1 === movies.length ? 8 : 0 }}>
+          <MovieCard
+            isFirst={index === 0}
+            image={item.poster_path ?? ''}
+            title={item.title}
+            year={item.release_date.split('-')[0]}
+          />
         </View>
       );
     },
@@ -43,13 +53,11 @@ const Trending: React.FC = () => {
           <S.Search source={search} />
         </TouchableOpacity>
       </S.Header>
-      <S.Content>
-        <FlatList
-          data={movies}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-        />
-      </S.Content>
+      <FlatList
+        data={movies}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+      />
     </S.Container>
   );
 };

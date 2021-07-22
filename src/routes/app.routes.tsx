@@ -50,7 +50,7 @@ const Tabs = () => {
         inactiveTintColor: '#CDCED1',
         showLabel: false,
         style: {
-          backgroundColor: '#1C1D2A',
+          backgroundColor: '#1B1C2A',
         },
       }}
     >
