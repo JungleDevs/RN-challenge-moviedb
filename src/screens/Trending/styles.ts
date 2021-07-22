@@ -10,7 +10,7 @@ export const Header = styled.View`
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
-  margin-top: 24px;
+  margin: 24px 0;
 `;
 
 export const Title = styled.Text`
@@ -22,4 +22,8 @@ export const Title = styled.Text`
 export const Search = styled.Image`
   height: 20px;
   width: 20px;
+`;
+
+export const Content = styled.View`
+  padding: 0 24px;
 `;
