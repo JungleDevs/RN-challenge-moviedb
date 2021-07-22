@@ -7,12 +7,18 @@ interface CardProps {
   image: string;
   isFirst: boolean;
   title: string;
-  genres?: string;
+  genres: string[];
   year: string;
   rating?: unknown;
 }
 
-const MovieCard: React.FC<CardProps> = ({ image, title, year, isFirst }) => {
+const MovieCard: React.FC<CardProps> = ({
+  image,
+  title,
+  year,
+  isFirst,
+  genres,
+}) => {
   return (
     <S.Container isFirst={isFirst ?? false}>
       <S.Banner
@@ -28,6 +34,9 @@ const MovieCard: React.FC<CardProps> = ({ image, title, year, isFirst }) => {
         )}
         <S.Title>{title}</S.Title>
         <S.Text>{year}</S.Text>
+        <S.Text>
+          {genres[0]} / {genres[1]}
+        </S.Text>
       </S.Info>
     </S.Container>
   );
