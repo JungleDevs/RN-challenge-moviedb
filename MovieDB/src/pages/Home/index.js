@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import ContainerMovie from '../../components/ContainerMovie';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +21,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
+      <ContainerMovie />
     </View>
   );
 };

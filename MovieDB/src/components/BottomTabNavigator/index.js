@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 
 import Homeimage from '../../../src/icons/home.png';
 import FilmImage from '../../../src/icons/film-xxl.png';
@@ -33,12 +33,6 @@ const styles = StyleSheet.create({
 });
 
 const Tab = createBottomTabNavigator();
-
-// const CustomTabBarButtom = ({children, onPress}) => {
-//   <TouchableOpacity onPress={onPress}>
-//     <View>{children}</View>
-//   </TouchableOpacity>;
-// };
 
 const NavigationPages = () => {
   return (
