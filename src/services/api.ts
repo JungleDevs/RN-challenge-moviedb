@@ -26,8 +26,9 @@ export interface Movie {
   overview: string;
   popularity: number;
   media_type: string;
+  isFirst?: boolean;
 }
-interface Trending {
+interface MoviesList {
   page: number;
   results: Movie[];
   total_pages: number;
@@ -39,13 +40,15 @@ export interface Genre {
   name: string;
 }
 
-export const getTrendingMovies = async (): Promise<AxiosResponse<Trending>> => {
+export const getTrendingMovies = async (): Promise<
+  AxiosResponse<MoviesList>
+> => {
   try {
     const url = `/trending/movie/week?api_key=${API_KEY}`;
-    const response = await api.get<Trending>(url);
+    const response = await api.get<MoviesList>(url);
     return response;
   } catch (e) {
-    throw new Error('Não foi possível carregar os dados');
+    throw new Error('Unable to load data');
   }
 };
 
@@ -57,6 +60,18 @@ export const getGenres = async (): Promise<
     const response = await api.get<{ genres: Genre[] }>(url);
     return response;
   } catch (e) {
-    throw new Error('Não foi possível carregar os dados');
+    throw new Error('Unable to load data');
+  }
+};
+
+export const searchMovies = async (
+  text: string,
+): Promise<AxiosResponse<MoviesList>> => {
+  try {
+    const url = `/search/movie?api_key=${API_KEY}&query=${text}`;
+    const response = await api.get(url);
+    return response;
+  } catch (e) {
+    throw new Error('Unable to do the search');
   }
 };

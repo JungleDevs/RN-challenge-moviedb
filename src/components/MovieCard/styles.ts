@@ -20,6 +20,16 @@ export const Banner = styled.Image`
   border-top-left-radius: 7px;
 `;
 
+export const EmptyBanner = styled.View`
+  height: 100%;
+  width: 118px;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+`;
+
 export const Info = styled.View`
   height: 100%;
   flex-shrink: 1;

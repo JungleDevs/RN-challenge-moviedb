@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import StarRating from 'react-native-star-rating';
 
 import MedalIcon from '../../assets/svg/medal.svg';
@@ -7,7 +8,7 @@ import * as S from './styles';
 
 interface CardProps {
   image: string;
-  isFirst: boolean;
+  isFirst?: boolean;
   title: string;
   genres: string[];
   year: string;
@@ -24,10 +25,16 @@ const MovieCard: React.FC<CardProps> = ({
 }) => {
   return (
     <S.Container isFirst={isFirst ?? false}>
-      <S.Banner
-        source={{ uri: `https://image.tmdb.org/t/p/w342${image}` }}
-        resizeMode="stretch"
-      />
+      {image ? (
+        <S.Banner
+          source={{ uri: `https://image.tmdb.org/t/p/w342${image}` }}
+          resizeMode="stretch"
+        />
+      ) : (
+        <S.EmptyBanner>
+          <Icon name="image" size={38} color="#CDCED1" />
+        </S.EmptyBanner>
+      )}
       <S.Info>
         <View>
           {isFirst && (
@@ -39,7 +46,7 @@ const MovieCard: React.FC<CardProps> = ({
           <S.Title>{title}</S.Title>
           <S.Text>{year}</S.Text>
           <S.Text>
-            {genres[0]} / {genres[1]}
+            {!!genres[0] && genres[0]} {!!genres[1] && `/ ${genres[1]}`}
           </S.Text>
         </View>
         <S.StarsContainer isFirst={isFirst ?? false}>

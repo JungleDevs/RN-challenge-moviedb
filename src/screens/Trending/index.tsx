@@ -9,32 +9,41 @@ import {
   Alert,
   RefreshControl,
 } from 'react-native';
+import { debounce, isEmpty } from 'lodash';
 import Icon from 'react-native-vector-icons/Feather';
 
 import search from '../../assets/icons/search.png';
 import MovieCard from '../../components/MovieCard';
-import { getTrendingMovies, Movie, getGenres, Genre } from '../../services/api';
+import {
+  getTrendingMovies,
+  Movie,
+  getGenres,
+  Genre,
+  searchMovies,
+} from '../../services/api';
 import * as S from './styles';
 
 const Trending: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [isSearching, setIsSearching] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
-  const [refresh, setRefresh] = useState(true);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const fetchData = useCallback(async () => {
     setRefresh(true);
     try {
       const { data } = await getTrendingMovies();
       const { data: result } = await getGenres();
+      data.results[0].isFirst = true;
       setMovies(data.results);
       setGenres(result.genres);
       setLoading(false);
       setRefresh(false);
     } catch (e) {
-      Alert.alert('Atenção', e.message);
+      Alert.alert('Sorry', e.message);
       setLoading(false);
       setRefresh(false);
     }
@@ -44,20 +53,61 @@ const Trending: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const searchQuery = useCallback(
+    debounce(async (text: string) => {
+      try {
+        if (!text) {
+          setLoadingSearch(false);
+          return;
+        }
+        const {
+          data: { results },
+        } = await searchMovies(text);
+
+        if (isEmpty(results)) Alert.alert('Sorry', 'Nothing was found');
+        else {
+          const popularity = results.sort(
+            (a, b) => b.popularity - a.popularity,
+          );
+          setMovies(popularity);
+        }
+
+        setLoadingSearch(false);
+      } catch (e) {
+        setLoadingSearch(false);
+      }
+    }, 500),
+    [],
+  );
+
   const headerComponent = useMemo(
     () =>
       isSearching ? (
-        <S.SearchContainer>
-          <S.TextInput value={searchText} onChangeText={setSearchText} />
-          <TouchableOpacity
-            onPress={() => {
-              setIsSearching(false);
-              setSearchText('');
-            }}
-          >
-            <Icon name="x-circle" size={30} color="#CDCED1" />
-          </TouchableOpacity>
-        </S.SearchContainer>
+        <>
+          <S.SearchContainer>
+            <S.TextInput
+              value={searchText}
+              onChangeText={text => {
+                setLoadingSearch(true);
+                setSearchText(text);
+                searchQuery(text);
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                fetchData();
+                setIsSearching(false);
+                setSearchText('');
+              }}
+            >
+              <Icon name="x-circle" size={30} color="#CDCED1" />
+            </TouchableOpacity>
+          </S.SearchContainer>
+          {loadingSearch && (
+            <ActivityIndicator style={{ marginBottom: 16 }} color="#CDCED1" />
+          )}
+        </>
       ) : (
         <S.Header>
           <S.Title>Top Movies</S.Title>
@@ -66,7 +116,7 @@ const Trending: React.FC = () => {
           </TouchableOpacity>
         </S.Header>
       ),
-    [isSearching, searchText],
+    [isSearching, searchText, searchQuery, fetchData, loadingSearch],
   );
 
   const renderItem = useCallback(
@@ -81,17 +131,17 @@ const Trending: React.FC = () => {
       return (
         <View style={{ marginBottom: index + 1 === movies.length ? 8 : 0 }}>
           <MovieCard
-            isFirst={index === 0}
+            isFirst={item.isFirst}
             image={item.poster_path ?? ''}
             title={item.title}
-            year={item.release_date.split('-')[0]}
+            year={item.release_date?.split('-')[0]}
             genres={names}
             rating={item.vote_average / 2}
           />
         </View>
       );
     },
-    [movies.length, genres],
+    [movies, genres],
   );
 
   const emptyComponent = () => (
@@ -112,7 +162,7 @@ const Trending: React.FC = () => {
       <SafeAreaView />
       {loading ? (
         <S.LoadingContainer>
-          <ActivityIndicator />
+          <ActivityIndicator color="#CDCED1" />
         </S.LoadingContainer>
       ) : (
         <FlatList
@@ -126,7 +176,9 @@ const Trending: React.FC = () => {
               tintColor="#CDCED1"
               colors={['#CDCED1']}
               refreshing={refresh}
-              onRefresh={fetchData}
+              onRefresh={
+                isSearching ? () => searchQuery(searchText) : fetchData
+              }
             />
           }
         />
