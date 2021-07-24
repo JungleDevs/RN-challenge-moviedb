@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-import Tv from '../../images/tv.png';
+import Star from '../../icons/star.png';
+import BlanckStar from '../../icons/blanck-star.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,6 +11,7 @@ const styles = StyleSheet.create({
     height: 168,
     width: 312,
     borderRadius: 8,
+    marginTop: 16,
     alignSelf: 'center',
   },
   imgContainer: {
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontFamily: 'Inter',
     fontSize: 16,
+    width: 162,
   },
   movieGenre: {
     color: '#CDCED1',
@@ -58,24 +61,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const ContainerMovie = (img, title, genre, year, rating) => {
+const ContainerMovie = ({img, title, genre, year, rating, onPress}) => {
+  const uri = `https://image.tmdb.org/t/p/w780/${img}`;
   return (
-    <View style={styles.container}>
-      <View style={styles.imgContainer}>
-        <Image style={styles.imgContainer} source={img} />
-      </View>
-      <View style={styles.moviesInfo}>
-        <View>
-          <Text style={styles.movieTitle}>{title}</Text>
-          <Text style={styles.movieGenre}>{genre}</Text>
-          <Text style={styles.movieGenre}>{year}</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.imgContainer}>
+          <Image style={styles.imgContainer} source={{uri}} />
         </View>
-        <View style={styles.ratingContainer}>
-          <Image style={styles.starsIcon} source={Tv} />
-          <Text style={styles.textRating}>{rating}</Text>
+        <View style={styles.moviesInfo}>
+          <View>
+            <Text style={styles.movieTitle}>{title}</Text>
+            <Text style={styles.movieGenre}>{genre}</Text>
+            <Text style={styles.movieGenre}>{year.substring(0, 4)}</Text>
+          </View>
+          <View style={styles.ratingContainer}>
+            <Image style={styles.starsIcon} source={Star} />
+            <Text style={styles.textRating}>{rating}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

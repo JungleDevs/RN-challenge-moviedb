@@ -2,9 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import ContainerMovie from '../../components/ContainerMovie';
-import {topMoviesApi} from '../../service';
-
-import Trending from '../Trending';
+import {trendingMovies} from '../../service';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,26 +10,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: 'space-around',
   },
-  title: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 32,
-    lineHeight: 48,
-    left: 56,
-    top: 56,
-    marginBottom: 56,
-  },
 });
 
-const TopMovies = ({navigation}) => {
-  const LOADING_TEXT = 'Loading...';
-  const TOP_MOVIES = 'Top Movies';
+const TrendingMovies = () => {
   const [movieList, setMovieList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchMovies = async () => {
     try {
-      const response = await topMoviesApi(1);
+      const response = await trendingMovies(1);
+      console.log(response.data.results);
       setMovieList(response.data.results);
     } catch (e) {
       console.log('Error: ', e);
@@ -43,9 +31,10 @@ const TopMovies = ({navigation}) => {
     setLoading(false);
   }, []);
 
+  const LOADING_TEXT = 'Loading...';
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{TOP_MOVIES}</Text>
       <FlatList
         data={movieList}
         keyExtractor={i => i.id}
@@ -53,14 +42,15 @@ const TopMovies = ({navigation}) => {
           return loading ? (
             <Text>{LOADING_TEXT}</Text>
           ) : (
-            <ContainerMovie
-              img={item.poster_path}
-              title={item.title}
-              genre={item.genre_ids}
-              year={item.release_date}
-              rating={item.vote_average}
-              onPress={() => navigation.navigate('SearchBy', {movie: item})}
-            />
+            <TouchableOpacity>
+              <ContainerMovie
+                img={item.poster_path}
+                title={item.title}
+                genre={item.genres}
+                year={item.release_date}
+                rating={item.vote_average}
+              />
+            </TouchableOpacity>
           );
         }}
       />
@@ -68,4 +58,4 @@ const TopMovies = ({navigation}) => {
   );
 };
 
-export default TopMovies;
+export default TrendingMovies;

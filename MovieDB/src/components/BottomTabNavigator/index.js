@@ -65,17 +65,7 @@ const NavigationPages = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="SearchBy"
-        component={SearchBy}
-        options={{
-          tabBarIcon: () => (
-            <View>
-              <Image source={FilmImage} style={styles.icon} />
-            </View>
-          ),
-        }}
-      />
+      <Tab.Screen name="SearchBy" component={SearchBy} />
       <Tab.Screen
         name="Trending"
         component={Trending}
