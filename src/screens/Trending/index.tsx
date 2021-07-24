@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { debounce, isEmpty } from 'lodash';
 import Icon from 'react-native-vector-icons/Feather';
+import { useDispatch, useSelector } from 'react-redux';
 
 import search from '../../assets/icons/search.png';
 import MovieCard from '../../components/MovieCard';
@@ -22,15 +23,17 @@ import {
   searchMovies,
 } from '../../services/api';
 import * as S from './styles';
+import { selectMovies, setMovies as setMoviesList } from '../../slices/movies';
 
 const Trending: React.FC = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const movies = useSelector(selectMovies);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const dispatch = useDispatch();
 
   const fetchData = useCallback(async () => {
     setRefresh(true);
@@ -38,7 +41,7 @@ const Trending: React.FC = () => {
       const { data } = await getTrendingMovies();
       const { data: result } = await getGenres();
       data.results[0].isFirst = true;
-      setMovies(data.results);
+      dispatch(setMoviesList(data.results));
       setGenres(result.genres);
       setLoading(false);
       setRefresh(false);
@@ -47,7 +50,7 @@ const Trending: React.FC = () => {
       setLoading(false);
       setRefresh(false);
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     fetchData();
@@ -70,7 +73,7 @@ const Trending: React.FC = () => {
           const popularity = results.sort(
             (a, b) => b.popularity - a.popularity,
           );
-          setMovies(popularity);
+          dispatch(setMoviesList(popularity));
         }
 
         setLoadingSearch(false);
@@ -93,8 +96,10 @@ const Trending: React.FC = () => {
                 setSearchText(text);
                 searchQuery(text);
               }}
+              autoFocus
             />
             <TouchableOpacity
+              style={{ padding: 4 }}
               onPress={() => {
                 fetchData();
                 setIsSearching(false);
@@ -111,7 +116,10 @@ const Trending: React.FC = () => {
       ) : (
         <S.Header>
           <S.Title>Top Movies</S.Title>
-          <TouchableOpacity onPress={() => setIsSearching(true)}>
+          <TouchableOpacity
+            style={{ padding: 4 }}
+            onPress={() => setIsSearching(true)}
+          >
             <S.Search source={search} />
           </TouchableOpacity>
         </S.Header>
