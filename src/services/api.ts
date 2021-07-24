@@ -40,11 +40,11 @@ export interface Genre {
   name: string;
 }
 
-export const getTrendingMovies = async (): Promise<
-  AxiosResponse<MoviesList>
-> => {
+export const getTrendingMovies = async (
+  page = 1,
+): Promise<AxiosResponse<MoviesList>> => {
   try {
-    const url = `/trending/movie/week?api_key=${API_KEY}`;
+    const url = `/trending/movie/week?api_key=${API_KEY}&page=${page}`;
     const response = await api.get<MoviesList>(url);
     return response;
   } catch (e) {
@@ -66,9 +66,10 @@ export const getGenres = async (): Promise<
 
 export const searchMovies = async (
   text: string,
+  page = 1,
 ): Promise<AxiosResponse<MoviesList>> => {
   try {
-    const url = `/search/movie?api_key=${API_KEY}&query=${text}`;
+    const url = `/search/movie?api_key=${API_KEY}&query=${text}&page=${page}`;
     const response = await api.get(url);
     return response;
   } catch (e) {

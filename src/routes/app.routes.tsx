@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Trending, Details } from '../screens';
+import { Trending, Details, ComingSoon } from '../screens';
 import home from '../assets/icons/home.png';
 import trending from '../assets/icons/trending.png';
 import trailers from '../assets/icons/trailers.png';
@@ -54,10 +54,10 @@ const Tabs = () => {
         },
       }}
     >
-      <Tab.Screen name="Home" component={Trending} />
+      <Tab.Screen name="Home" component={ComingSoon} />
       <Tab.Screen name="Trending" component={Trending} />
-      <Tab.Screen name="Trailers" component={Trending} />
-      <Tab.Screen name="Statistics" component={Trending} />
+      <Tab.Screen name="Trailers" component={ComingSoon} />
+      <Tab.Screen name="Statistics" component={ComingSoon} />
     </Tab.Navigator>
   );
 };

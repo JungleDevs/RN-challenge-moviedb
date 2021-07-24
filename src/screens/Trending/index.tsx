@@ -1,10 +1,15 @@
 /* eslint-disable react/no-unused-prop-types */
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
 import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
-  View,
   ActivityIndicator,
   Alert,
   RefreshControl,
@@ -14,7 +19,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
 
 import search from '../../assets/icons/search.png';
-import MovieCard from '../../components/MovieCard';
+import { MovieCard, Pagination } from '../../components';
 import {
   getTrendingMovies,
   Movie,
@@ -37,6 +42,9 @@ const Trending: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const ref = useRef<FlatList>(null);
   const dispatch = useDispatch();
 
   const fetchData = useCallback(async () => {
@@ -79,10 +87,12 @@ const Trending: React.FC = () => {
             (a, b) => b.popularity - a.popularity,
           );
           setMovies(popularity);
+          setPage(1);
         }
 
         setLoadingSearch(false);
       } catch (e) {
+        Alert.alert('Sorry', e.message);
         setLoadingSearch(false);
       }
     }, 500),
@@ -111,6 +121,7 @@ const Trending: React.FC = () => {
                 fetchData();
                 setIsSearching(false);
                 setSearchText('');
+                setPage(1);
               }}
             >
               <Icon name="x-circle" size={30} color="#CDCED1" />
@@ -135,7 +146,7 @@ const Trending: React.FC = () => {
   );
 
   const renderItem = useCallback(
-    ({ item, index }: { item: Movie; index: number }) => {
+    ({ item }: { item: Movie }) => {
       const {
         isFirst,
         poster_path,
@@ -154,20 +165,18 @@ const Trending: React.FC = () => {
         });
       });
       return (
-        <View style={{ marginBottom: index + 1 === movies.length ? 8 : 0 }}>
-          <MovieCard
-            isFirst={isFirst}
-            image={poster_path ?? ''}
-            title={title}
-            year={release_date?.split('-')[0]}
-            genres={names}
-            rating={vote_average / 2}
-            overview={overview}
-          />
-        </View>
+        <MovieCard
+          isFirst={isFirst}
+          image={poster_path ?? ''}
+          title={title}
+          year={release_date?.split('-')[0]}
+          genres={names}
+          rating={vote_average / 2}
+          overview={overview}
+        />
       );
     },
-    [movies, genres],
+    [genres],
   );
 
   const emptyComponent = () => (
@@ -183,6 +192,10 @@ const Trending: React.FC = () => {
     </S.LoadingContainer>
   );
 
+  const scrollToTop = () => {
+    ref.current?.scrollToOffset({ offset: 0 });
+  };
+
   return (
     <S.Container>
       <SafeAreaView />
@@ -191,23 +204,36 @@ const Trending: React.FC = () => {
           <ActivityIndicator color="#CDCED1" />
         </S.LoadingContainer>
       ) : (
-        <FlatList
-          data={movies}
-          renderItem={renderItem}
-          ListHeaderComponent={headerComponent}
-          ListEmptyComponent={emptyComponent}
-          keyExtractor={item => item.id.toString()}
-          refreshControl={
-            <RefreshControl
-              tintColor="#CDCED1"
-              colors={['#CDCED1']}
-              refreshing={refresh}
-              onRefresh={
-                isSearching ? () => searchQuery(searchText) : fetchData
-              }
-            />
-          }
-        />
+        <>
+          <FlatList
+            ref={ref}
+            data={movies}
+            renderItem={renderItem}
+            ListHeaderComponent={headerComponent}
+            ListEmptyComponent={emptyComponent}
+            ListFooterComponent={
+              <Pagination
+                page={page}
+                setPage={setPage}
+                setMovies={setMovies}
+                scrollToTop={scrollToTop}
+                isSearching={isSearching}
+                searchText={searchText}
+              />
+            }
+            keyExtractor={item => item.id.toString()}
+            refreshControl={
+              <RefreshControl
+                tintColor="#CDCED1"
+                colors={['#CDCED1']}
+                refreshing={refresh}
+                onRefresh={
+                  isSearching ? () => searchQuery(searchText) : fetchData
+                }
+              />
+            }
+          />
+        </>
       )}
     </S.Container>
   );
