@@ -1,10 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import StarRating from 'react-native-star-rating';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import MedalIcon from '../../assets/svg/medal.svg';
 import * as S from './styles';
+import { setCurrentMovie } from '../../slices/movies';
+import Stars from '../Stars';
 
 interface CardProps {
   image: string;
@@ -13,6 +16,7 @@ interface CardProps {
   genres: string[];
   year: string;
   rating: number;
+  overview: string;
 }
 
 const MovieCard: React.FC<CardProps> = ({
@@ -22,9 +26,28 @@ const MovieCard: React.FC<CardProps> = ({
   isFirst,
   genres,
   rating,
+  overview,
 }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
-    <S.Container isFirst={isFirst ?? false}>
+    <S.Container
+      onPress={() => {
+        dispatch(
+          setCurrentMovie({
+            image,
+            title,
+            year,
+            isFirst,
+            genres,
+            rating,
+            overview,
+          }),
+        );
+        navigation.navigate('Details');
+      }}
+      isFirst={isFirst ?? false}
+    >
       {image ? (
         <S.Banner
           source={{ uri: `https://image.tmdb.org/t/p/w342${image}` }}
@@ -49,21 +72,7 @@ const MovieCard: React.FC<CardProps> = ({
             {!!genres[0] && genres[0]} {!!genres[1] && `/ ${genres[1]}`}
           </S.Text>
         </View>
-        <S.StarsContainer isFirst={isFirst ?? false}>
-          <StarRating
-            containerStyle={{
-              width: 100,
-              marginRight: 10,
-            }}
-            starSize={16}
-            fullStarColor="#FFD706"
-            emptyStarColor="#FFD706"
-            disabled
-            maxStars={5}
-            rating={rating}
-          />
-          <S.StarsNUmber>{rating.toFixed(1)}/5</S.StarsNUmber>
-        </S.StarsContainer>
+        <Stars isFirst={isFirst} rating={rating} />
       </S.Info>
     </S.Container>
   );

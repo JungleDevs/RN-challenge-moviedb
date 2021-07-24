@@ -19,15 +19,19 @@ import {
   getTrendingMovies,
   Movie,
   getGenres,
-  Genre,
   searchMovies,
 } from '../../services/api';
 import * as S from './styles';
-import { selectMovies, setMovies as setMoviesList } from '../../slices/movies';
+import {
+  selectGenres,
+  selectMovies,
+  setGenres,
+  setMovies as setMoviesList,
+} from '../../slices/movies';
 
 const Trending: React.FC = () => {
-  const movies = useSelector(selectMovies);
-  const [genres, setGenres] = useState<Genre[]>([]);
+  const [movies, setMovies] = useState(useSelector(selectMovies));
+  const genres = useSelector(selectGenres);
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
@@ -42,7 +46,8 @@ const Trending: React.FC = () => {
       const { data: result } = await getGenres();
       data.results[0].isFirst = true;
       dispatch(setMoviesList(data.results));
-      setGenres(result.genres);
+      setMovies(data.results);
+      dispatch(setGenres(result.genres));
       setLoading(false);
       setRefresh(false);
     } catch (e) {
@@ -73,7 +78,7 @@ const Trending: React.FC = () => {
           const popularity = results.sort(
             (a, b) => b.popularity - a.popularity,
           );
-          dispatch(setMoviesList(popularity));
+          setMovies(popularity);
         }
 
         setLoadingSearch(false);
@@ -96,6 +101,8 @@ const Trending: React.FC = () => {
                 setSearchText(text);
                 searchQuery(text);
               }}
+              placeholder="Digite aqui..."
+              placeholderTextColor="#CDCED1"
               autoFocus
             />
             <TouchableOpacity
@@ -129,22 +136,33 @@ const Trending: React.FC = () => {
 
   const renderItem = useCallback(
     ({ item, index }: { item: Movie; index: number }) => {
-      const mainGenres = item.genre_ids.slice(0, 2);
+      const {
+        isFirst,
+        poster_path,
+        title,
+        release_date,
+        vote_average,
+        overview,
+        genre_ids,
+      } = item;
+      const mainGenres = genre_ids.slice(0, 2);
       const names: string[] = [];
       mainGenres.forEach(num => {
         genres.forEach(genre => {
-          if (num === genre.id) names.push(genre.name);
+          const { id, name } = genre;
+          if (num === id) names.push(name);
         });
       });
       return (
         <View style={{ marginBottom: index + 1 === movies.length ? 8 : 0 }}>
           <MovieCard
-            isFirst={item.isFirst}
-            image={item.poster_path ?? ''}
-            title={item.title}
-            year={item.release_date?.split('-')[0]}
+            isFirst={isFirst}
+            image={poster_path ?? ''}
+            title={title}
+            year={release_date?.split('-')[0]}
             genres={names}
-            rating={item.vote_average / 2}
+            rating={vote_average / 2}
+            overview={overview}
           />
         </View>
       );

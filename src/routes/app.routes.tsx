@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Trending } from '../screens';
+import { Trending, Details } from '../screens';
 import home from '../assets/icons/home.png';
 import trending from '../assets/icons/trending.png';
 import trailers from '../assets/icons/trailers.png';
@@ -70,11 +70,11 @@ const Routes = (): JSX.Element => {
         initialRouteName="Tabs"
         screenOptions={{
           headerShown: false,
-          cardStyle: { backgroundColor: '#252634' },
+          cardStyle: { backgroundColor: '#070818' },
         }}
       >
         <Stack.Screen name="Tabs" component={Tabs} />
-        {/* <Stack.Screen name="Details" component={Details} /> */}
+        <Stack.Screen name="Details" component={Details} />
       </Stack.Navigator>
     </NavigationContainer>
   );

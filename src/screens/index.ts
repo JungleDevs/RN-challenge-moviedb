@@ -1,3 +1,4 @@
 import Trending from './Trending';
+import Details from './Details';
 
-export { Trending };
+export { Trending, Details };
