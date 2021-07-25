@@ -10,8 +10,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // import Icons from 'react-native-vector-icons/Ionicons';
 
-import Home from '../../pages/Home';
-import Trending from '../../pages/Trending';
+import Trending from '../../pages/Home';
+import SearchMovie from '../../pages/SearchMovie';
 import TopMovies from '../../pages/TopMovies';
 import SearchBy from '../../pages/SearchBy';
 
@@ -44,8 +44,8 @@ const NavigationPages = () => {
         },
       }}>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="Trending"
+        component={Trending}
         options={{
           tabBarIcon: () => (
             <View>
@@ -77,8 +77,8 @@ const NavigationPages = () => {
         }}
       />
       <Tab.Screen
-        name="Trending"
-        component={Trending}
+        name="SearchMovie"
+        component={SearchMovie}
         options={{
           tabBarIcon: () => (
             <View>

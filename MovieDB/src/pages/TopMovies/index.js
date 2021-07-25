@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import ContainerMovie from '../../components/ContainerMovie';
 import {topMoviesApi} from '../../service';
+
+import {setMovieList, setLoading} from '../../store/actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,24 +25,26 @@ const styles = StyleSheet.create({
 });
 
 const TopMovies = ({navigation}) => {
+  const {movieList, loading} = useSelector(state => state.userReducerMovie);
+  const dispatch = useDispatch();
+
   const LOADING_TEXT = 'Loading...';
   const TOP_MOVIES = 'Top Movies';
-  const [movieList, setMovieList] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchMovies = async () => {
-    try {
-      const response = await topMoviesApi(1);
-      setMovieList(response.data.results);
-    } catch (e) {
-      console.log('Error: ', e);
-    }
-  };
+  // const [movieList, setMovieList] = useState([]);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await topMoviesApi(1);
+        dispatch(setMovieList(response.data.results));
+      } catch (e) {
+        console.log('Error: ', e);
+      }
+    };
     fetchMovies();
     setLoading(false);
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>

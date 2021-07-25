@@ -20,7 +20,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchBy = ({navigation, route}) => {
+const SearchBy = ({route}) => {
+  // const {movieList, loading} = useSelector(state => state.userReducer);
+  // const dispatch = useDispatch();
+
   const [selectedMovie, setSelectedMovie] = useState([]);
 
   useEffect(() => {

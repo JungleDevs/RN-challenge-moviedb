@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList, TextInput} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import ContainerMovie from '../../components/ContainerMovie';
 import {searchMoviesAPI} from '../../service';
+
+import {setMovieList, setLoading} from '../../store/actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,21 +31,24 @@ const styles = StyleSheet.create({
 });
 
 const SearchMovie = ({navigation}) => {
+  const {movieList, loading} = useSelector(state => state.userReducerMovie);
+  const dispatch = useDispatch();
+
   const LOADING_TEXT = 'Loading...';
 
-  const [movieList, setMovieList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [movieList, setMovieList] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
 
   const fetchMovies = useCallback(async () => {
     try {
       const response = await searchMoviesAPI(query);
       console.log(response.data.results);
-      setMovieList(response.data.results);
+      dispatch(setMovieList(response.data.results));
     } catch (error) {
       console.log('Error:', error);
     }
-  }, [query]);
+  }, [query, dispatch]);
 
   useEffect(() => {
     fetchMovies();

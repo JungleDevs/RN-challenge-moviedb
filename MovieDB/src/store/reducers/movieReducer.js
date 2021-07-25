@@ -1,12 +1,19 @@
+import {SET_MOVIE_LIST, SET_LOADING} from '../actions';
+
 const MOVIE_STATE = {
-  movies: [],
+  movieList: [],
+  loading: true,
 };
 
-export const reducer = (state = MOVIE_STATE, action) => {
+const userReducerMovie = (state = MOVIE_STATE, action) => {
   switch (action.type) {
-    case 'VALIDAR':
-      return {...state, action};
+    case SET_MOVIE_LIST:
+      return {movieList: action.payload};
+    case SET_LOADING:
+      return {...state, loading: action.payload};
     default:
       return state;
   }
 };
+
+export default userReducerMovie;

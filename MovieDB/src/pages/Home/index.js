@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 import ContainerMovie from '../../components/ContainerMovie';
 import SearchMovie from '../SearchMovie';
 import {trendingMovies} from '../../service';
 import Lupa from '../../icons/lupa.png';
+
+import {setMovieList, setLoading} from '../../store/actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,24 +43,24 @@ const styles = StyleSheet.create({
 });
 
 const Trending = ({navigation}) => {
+  const {movieList, loading} = useSelector(state => state.userReducerMovie);
+  const dispatch = useDispatch();
+
   const LOADING_TEXT = 'Loading...';
   const TOP_MOVIE = 'Top Movies';
-  const [movieList, setMovieList] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchMovies = async () => {
-    try {
-      const response = await trendingMovies(1);
-      setMovieList(response.data.results);
-    } catch (e) {
-      console.log('Error: ', e);
-    }
-  };
 
   useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await trendingMovies(1);
+        dispatch(setMovieList(response.data.results));
+      } catch (e) {
+        console.log('Error: ', e);
+      }
+    };
     fetchMovies();
     setLoading(false);
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>

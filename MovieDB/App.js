@@ -1,14 +1,20 @@
 import React from 'react';
-import {Provider} from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
 
-import Trending from './src/pages/Home';
-import {store} from './src/store/store';
+import {Provider} from 'react-redux';
+import {Store} from './src/store/store';
+
+import NavigationPages from './src/components/BottomTabNavigator';
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <Trending />
-    </Provider>
+    <>
+      <Provider store={Store}>
+        <NavigationContainer>
+          <NavigationPages />
+        </NavigationContainer>
+      </Provider>
+    </>
   );
 };
 
