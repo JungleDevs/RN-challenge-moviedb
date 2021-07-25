@@ -1,23 +1,27 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+
+import SelectedMovie from '../../components/SelectedMovie';
+import TrendingMovies from '../../components/TrendingMovie';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#070818',
     flex: 1,
+    // width: '100%',
+    marginTop: 0,
+    alignSelf: 'center',
   },
-  title: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 32,
-    lineHeight: 48,
-    left: 56,
-    top: 56,
+  selectedMovie: {
+    // marginBottom: 30,
+    height: '60%',
+  },
+  trendingContainer: {
+    marginTop: 0,
   },
 });
 
 const SearchBy = ({navigation, route}) => {
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState([]);
 
   useEffect(() => {
     const {movie} = route.params;
@@ -26,22 +30,21 @@ const SearchBy = ({navigation, route}) => {
   }, [route.params]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>SearchBy</Text>
-      <FlatList
-        data={selectedMovie}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => {
-          return (
-            <View>
-              <Text>{item.title}</Text>
-              <Text>{item.id}</Text>
-              <Text>{item.title}</Text>
-            </View>
-          );
-        }}
-      />
-    </View>
+    <>
+      <View style={styles.container}>
+        <View style={styles.selectedMovie}>
+          <SelectedMovie
+            img={selectedMovie.backdrop_path}
+            title={selectedMovie.title}
+            genre={selectedMovie.genre_ids}
+            year={selectedMovie.release_date}
+            rating={selectedMovie.vote_average}
+            overview={selectedMovie.overview}
+          />
+        </View>
+      </View>
+      <TrendingMovies />
+    </>
   );
 };
 

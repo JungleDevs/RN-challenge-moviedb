@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+
 import LinearGradient from 'react-native-linear-gradient';
 
-import Tv from '../../images/tv.png';
+import Tv from '../../icons/star.png';
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#1B1C2A',
     height: 168,
     width: '100%',
     borderRadius: 8,
@@ -16,9 +16,6 @@ const styles = StyleSheet.create({
   imgContainer: {
     width: '100%',
     height: 472,
-    // backgroundColor: 'yellow',
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
     position: 'absolute',
   },
   moviesInfo: {
@@ -27,12 +24,11 @@ const styles = StyleSheet.create({
     paddingLeft: 76,
   },
   movieTitle: {
-    color: 'black',
+    color: 'white',
     fontWeight: '600',
     fontFamily: 'Inter',
     fontSize: 42,
     marginTop: 50,
-    backgroundColor: 'white',
   },
   movieGenre: {
     color: 'black',
@@ -46,8 +42,10 @@ const styles = StyleSheet.create({
   overviewContainer: {
     fontWeight: '400',
     fontFamily: 'Inter',
+    color: 'red',
     fontSize: 14,
     lineHeight: 20,
+    backgroundColor: 'red',
   },
   ratingContainer: {
     width: 116,
@@ -72,37 +70,36 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   linearGradient: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
+    // position: 'absolute',
+    flex: 1,
   },
 });
 
 const SelectedMovie = ({img, title, genre, year, rating, overview}) => {
   const uri = `https://image.tmdb.org/t/p/w780/${img}`;
+
+  const handleYear = movieYear => {
+    if (movieYear !== undefined) {
+      return movieYear.substring(0, 4);
+    }
+  };
   return (
     <View style={styles.container}>
       <LinearGradient
-        // start={{x: 0, Y: 0}}
-        // end={{x: 0, y: 0.1}}
-        colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.80)']}
-        styles={styles.linearGradient}>
-        <Image style={styles.imgContainer} source={uri} />
+        style={styles.linearGradient}
+        colors={['black', 'grey']}
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 0.5}}>
+        <Image style={styles.imgContainer} source={{uri}} />
         <View style={styles.moviesInfo}>
           <View>
             <Text style={styles.movieTitle}>{title}</Text>
             <View style={styles.movieTypeYearLength}>
-              <Text style={styles.movieGenre}>2019{(year, ' • ')}</Text>
-              <Text style={styles.movieGenre}>Ação{(genre, ' • ')}</Text>
+              <Text style={styles.movieGenre}>{handleYear(year)}</Text>
+              <Text style={styles.movieGenre}>{` • ${genre} • `}</Text>
             </View>
           </View>
-          <Text styles={styles.overviewContainer}>
-            FBI Agent Helter and his partner Lombardi are very close to busting
-            a sex-trafficking ring. When they realize their investigation has
-            crossed the path of a brutal serial killer, they team up with a
-            Texas Ranger to put an end to the infamous 'Truck Stop Killer
-            {overview}
-          </Text>
+          <Text styles={styles.overviewContainer}>{overview}</Text>
           <View style={styles.ratingContainer}>
             <Image style={styles.starsIcon} source={Tv} />
             <Text style={styles.textRating}>{rating}</Text>

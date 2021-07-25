@@ -16,4 +16,9 @@ export const topMoviesApi = async page => {
   return api.get(url);
 };
 
+export const searchMoviesAPI = async query => {
+  const url = `search/movie?${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+  return api.get(url);
+};
+
 export default api;

@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 
 import ContainerMovie from '../../components/ContainerMovie';
 import {topMoviesApi} from '../../service';
-
-import Trending from '../Trending';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,8 +15,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 32,
     lineHeight: 48,
-    left: 56,
     top: 56,
+    marginLeft: '6.7%',
     marginBottom: 56,
   },
 });
