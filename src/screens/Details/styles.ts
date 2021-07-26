@@ -34,7 +34,7 @@ export const Title = styled.Text<TitleProps>`
   font-family: 'Inter-SemiBold';
   font-size: 32px;
   color: #fff;
-  margin-left: ${props => (props.isFirst ? 16 : 0)};
+  margin-left: ${props => (props.isFirst ? '16px' : 0)};
 `;
 
 export const Text = styled.Text`

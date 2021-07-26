@@ -4,12 +4,24 @@
         "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
-    },
-    {
         "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_round.png.flat",
         "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/drawable_background_splash.xml.flat",
+        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/drawable/background_splash.xml"
+    },
+    {
+        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
     },
     {
         "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
@@ -18,10 +30,6 @@
     {
         "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_round.png.flat",
         "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
-    },
-    {
-        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
     },
     {
         "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
@@ -36,7 +44,7 @@
         "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
     },
     {
-        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/build/intermediates/res/merged/debug/drawable_icon.png.flat",
+        "source": "/Users/filipedrummond/ProjetosRN/desafios/MovieDB/android/app/src/main/res/drawable/icon.png"
     }
 ]

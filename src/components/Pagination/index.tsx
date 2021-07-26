@@ -39,13 +39,14 @@ const Pagination: React.FC<PaginationProps> = ({
         response = data.results.sort((a, b) => b.popularity - a.popularity);
         setMax(data.total_pages.toString());
       }
+      // dispatch(setNewMovies(response));
       setMovies(response);
       scrollToTop();
     } catch (e) {
       Alert.alert('Sorry', e.message);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText]);
+  }, [searchText, page, setMovies]);
 
   useEffect(() => {
     changePage();
