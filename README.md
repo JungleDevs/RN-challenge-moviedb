@@ -3,18 +3,18 @@
 
 ## Installation:
 
-## 1.
-### After you clone the project, in the project's folder first run:  
+### 1.
+#### After you clone the project, in the project's folder first run:  
 
-### `npm install` or `yarn`
+#### `npm install` or `yarn`
 
-## 2:
+### 2:
 
-## iOS:
-### `npx pod-install ios` and then `npx react-native run-ios` or you can open your project's .xcworkspace file with Xcode and click the play button
+### iOS:
+#### `npx pod-install ios` and then `npx react-native run-ios` or you can open your project's .xcworkspace file with Xcode and click the play button
 
-## Android:
-## `npx react-native run-android`
+### Android:
+#### `npx react-native run-android`
 
 ## Description
 
