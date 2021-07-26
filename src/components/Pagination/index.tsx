@@ -39,7 +39,6 @@ const Pagination: React.FC<PaginationProps> = ({
         response = data.results.sort((a, b) => b.popularity - a.popularity);
         setMax(data.total_pages.toString());
       }
-      // dispatch(setNewMovies(response));
       setMovies(response);
       scrollToTop();
     } catch (e) {
