@@ -1,9 +1,7 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
-
-import Tv from '../../icons/star.png';
+import Star from '../../icons/star.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,6 +28,13 @@ const styles = StyleSheet.create({
     fontSize: 42,
     marginTop: 50,
   },
+  arrowContainer: {
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    marginHorizontal: 26,
+    top: 30,
+  },
   movieGenre: {
     color: 'black',
     fontWeight: '400',
@@ -40,12 +45,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   overviewContainer: {
+    color: 'white',
     fontWeight: '400',
     fontFamily: 'Inter',
-    color: 'red',
     fontSize: 14,
     lineHeight: 20,
-    backgroundColor: 'red',
   },
   ratingContainer: {
     width: 116,
@@ -69,13 +73,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontSize: 12,
   },
-  linearGradient: {
-    // position: 'absolute',
-    flex: 1,
-  },
 });
 
-const SelectedMovie = ({img, title, genre, year, rating, overview}) => {
+const SelectedMovie = ({
+  img,
+  title,
+  genre,
+  year,
+  rating,
+  overview,
+  onPress,
+  icon,
+}) => {
   const uri = `https://image.tmdb.org/t/p/w780/${img}`;
 
   const handleYear = movieYear => {
@@ -85,27 +94,26 @@ const SelectedMovie = ({img, title, genre, year, rating, overview}) => {
   };
   return (
     <View style={styles.container}>
-      <LinearGradient
-        style={styles.linearGradient}
-        colors={['black', 'grey']}
-        start={{x: 0, y: 0}}
-        end={{x: 0, y: 0.5}}>
-        <Image style={styles.imgContainer} source={{uri}} />
-        <View style={styles.moviesInfo}>
-          <View>
-            <Text style={styles.movieTitle}>{title}</Text>
-            <View style={styles.movieTypeYearLength}>
-              <Text style={styles.movieGenre}>{handleYear(year)}</Text>
-              <Text style={styles.movieGenre}>{` • ${genre} • `}</Text>
-            </View>
-          </View>
-          <Text styles={styles.overviewContainer}>{overview}</Text>
-          <View style={styles.ratingContainer}>
-            <Image style={styles.starsIcon} source={Tv} />
-            <Text style={styles.textRating}>{rating}</Text>
+      <Image style={styles.imgContainer} source={{uri}} />
+      <TouchableOpacity
+        onPress={onPress}
+        hitSlop={{top: 50, bottom: 50, left: 50, right: 50}}>
+        <Image source={icon} style={styles.arrowContainer} />
+      </TouchableOpacity>
+      <View style={styles.moviesInfo}>
+        <View>
+          <Text style={styles.movieTitle}>{title}</Text>
+          <View style={styles.movieTypeYearLength}>
+            <Text style={styles.movieGenre}>{handleYear(year)}</Text>
+            <Text style={styles.movieGenre}>{` • ${genre} • `}</Text>
           </View>
         </View>
-      </LinearGradient>
+        <Text styles={styles.overviewContainer}>{overview}</Text>
+        <View style={styles.ratingContainer}>
+          <Image style={styles.starsIcon} source={Star} />
+          <Text style={styles.textRating}>{rating}</Text>
+        </View>
+      </View>
     </View>
   );
 };

@@ -6,6 +6,7 @@ import ContainerMovie from '../../components/ContainerMovie';
 import {searchMoviesAPI} from '../../service';
 
 import {setMovieList, setLoading} from '../../store/actions/index';
+import BackToHomeArrow from '../../components/BackToHomeArrow';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,11 +14,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: 'space-around',
   },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 26,
+    top: 56,
+    marginBottom: 56,
+  },
   input: {
     color: 'white',
-    borderWidth: 3,
+    borderWidth: 1,
     borderColor: 'white',
-    borderRadius: 3,
+    borderRadius: 1,
+    height: 30,
+    width: 150,
+  },
+  arrowContainer: {
+    width: 20,
+    height: 20,
   },
   title: {
     color: 'white',
@@ -30,14 +45,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchMovie = ({navigation}) => {
-  const {movieList, loading} = useSelector(state => state.userReducerMovie);
+const SearchMovie = () => {
+  const {movieList, loading} = useSelector(
+    state => state.searchMovieUserReducerMovie,
+  );
   const dispatch = useDispatch();
 
   const LOADING_TEXT = 'Loading...';
 
-  // const [movieList, setMovieList] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('');
 
   const fetchMovies = useCallback(async () => {
@@ -65,6 +80,7 @@ const SearchMovie = ({navigation}) => {
           placeholder="Search Movie"
           onChange={e => setQuery(e.target.value)}
         />
+        <BackToHomeArrow />
       </View>
       <FlatList
         data={movieList}

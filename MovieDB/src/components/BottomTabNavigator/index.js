@@ -8,8 +8,6 @@ import Statistics from '../../../src/icons/statistics-xxl.png';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-// import Icons from 'react-native-vector-icons/Ionicons';
-
 import Trending from '../../pages/Home';
 import SearchMovie from '../../pages/SearchMovie';
 import TopMovies from '../../pages/TopMovies';

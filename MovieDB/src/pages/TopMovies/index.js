@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
 });
 
 const TopMovies = ({navigation}) => {
-  const {movieList, loading} = useSelector(state => state.userReducerMovie);
+  const {movieList, loading} = useSelector(
+    state => state.topMovieUserReducerMovie,
+  );
   const dispatch = useDispatch();
 
   const LOADING_TEXT = 'Loading...';
-  const TOP_MOVIES = 'Top Movies';
-  // const [movieList, setMovieList] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const TOP_MOVIES = 'Top Movies of all time';
 
   useEffect(() => {
     const fetchMovies = async () => {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  Modal,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
 });
 
 const Trending = ({navigation}) => {
+  const [visible, setVisible] = useState(false);
   const {movieList, loading} = useSelector(state => state.userReducerMovie);
   const dispatch = useDispatch();
 
@@ -66,9 +68,12 @@ const Trending = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>{TOP_MOVIE}</Text>
-        <TouchableOpacity onPress={() => <SearchMovie />}>
+        <TouchableOpacity onPress={() => setVisible(true)}>
           <Image source={Lupa} style={styles.lupaContainer} />
         </TouchableOpacity>
+        <Modal animationType="slide" visible={visible}>
+          <SearchMovie />
+        </Modal>
       </View>
       <FlatList
         data={movieList}

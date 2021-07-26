@@ -3,27 +3,30 @@ import {View, StyleSheet} from 'react-native';
 
 import SelectedMovie from '../../components/SelectedMovie';
 import TrendingMovies from '../../components/TrendingMovie';
+import Arrow from '../../icons/arrow.png';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // width: '100%',
     marginTop: 0,
     alignSelf: 'center',
   },
   selectedMovie: {
-    // marginBottom: 30,
     height: '60%',
   },
   trendingContainer: {
     marginTop: 0,
   },
+  arrowContainer: {
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    marginHorizontal: 26,
+    // top: 56,
+  },
 });
 
-const SearchBy = ({route}) => {
-  // const {movieList, loading} = useSelector(state => state.userReducer);
-  // const dispatch = useDispatch();
-
+const SearchBy = ({navigation, route}) => {
   const [selectedMovie, setSelectedMovie] = useState([]);
 
   useEffect(() => {
@@ -43,6 +46,8 @@ const SearchBy = ({route}) => {
             year={selectedMovie.release_date}
             rating={selectedMovie.vote_average}
             overview={selectedMovie.overview}
+            onPress={() => navigation.navigate('Trending')}
+            icon={Arrow}
           />
         </View>
       </View>
