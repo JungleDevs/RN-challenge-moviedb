@@ -57,3 +57,27 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+MovieDB/.buckconfig 
+.buckconfig
+.editorconfig
+.flowconfig 
+.gitattributes
+.prettierrc.js
+.watchmanconfig
+MovieDB/android/app/_BUCK 
+MovieDB/android/app/build_defs.bzl
+MovieDB/android/app/debug.keystore
+MovieDB/android/app/src/debug/AndroidManifest.xml
+MovieDB/android/app/src/debug/java/com/moviedb/ReactNativeFlipper.java
+MovieDB/android/gradlew 
+MovieDB/android/gradlew.bat
+ MovieDB/ios/MovieDB.xcodeproj/xcshareddata/xcschemes/MovieDB.xcscheme
+ MovieDB/ios/MovieDB/AppDelegate.m 
+ MovieDB/ios/MovieDB/Images.xcassets/AppIcon.appiconset/Contents.json 
+ MovieDB/ios/MovieDB/Info.plist 
+ MovieDB/ios/MovieDB/LaunchScreen.storyboard 
+  MovieDB/ios/MovieDBTests/Info.plist
+  MovieDB/ios/MovieDBTests/MovieDBTests.m 
+MovieDB/ios/Podfile
+MovieDB/metro.config.js 
