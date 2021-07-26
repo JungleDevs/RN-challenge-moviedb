@@ -1,5 +1,21 @@
 # Jungle Devs - React Native Challenge The Movie DB
 
+
+## Installation:
+
+### 1.
+#### After you clone the project, in the project's folder first run:  
+
+#### `npm install` or `yarn`
+
+### 2:
+
+### iOS:
+#### `npx pod-install ios` and then `npx react-native run-ios` or you can open your project's .xcworkspace file with Xcode and click the play button
+
+### Android:
+#### `npx react-native run-android`
+
 ## Description
 
 **Challenge goal**: The purpose of this challenge is to give a general idea of how to create a simple app using a variety of well accepted practices and technologies in the market. You'll be implementing a simplified version of a movie preview app using The Movie DB API. The concepts that you're gonna apply are:
