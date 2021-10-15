@@ -6,7 +6,7 @@
         <item name="android:windowBackground">
             @drawable/background_splash
         </item>
-        <item>
+        <item name="color">
             @color/primary
         </item> 
     </style>
